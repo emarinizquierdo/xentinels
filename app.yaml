@@ -1,0 +1,21 @@
+application: xentineles
+version: 1-0-1
+runtime: python27
+threadsafe: true
+api_version: 1
+
+handlers:
+- url: /favicon\.ico
+  static_files: favicon.ico
+  upload: favicon\.ico
+
+- url: /api/user.*
+  script: main.APP
+
+- url: (.*)/
+  static_files: app\1/index.html
+  upload: app
+
+- url: (.*)
+  static_files: app\1
+  upload: app
