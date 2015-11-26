@@ -12,10 +12,11 @@ handlers:
 - url: /api/user.*
   script: main.APP
 
-- url: (.*)/
+- url: (.*)(/)
   static_files: app\1/index.html
   upload: app
 
 - url: (.*)
   static_files: app\1
   upload: app
+

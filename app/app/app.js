@@ -1,39 +1,27 @@
 'use strict';
 
-angular.module('datafestApp', [
-        'ngCookies',
-        'ngResource',
-        'ngSanitize',
-        'ngRoute',
-        'ngMaterial'
-    ])
-    .config(function($routeProvider, $locationProvider, $mdThemingProvider) {
+angular.module('xentinels', ['ngRoute'])
+    .config(function($routeProvider, $locationProvider) {
+
         $routeProvider
+            .when('/', {
+                templateUrl: '/app/views/main.html',
+                controller: 'MainCtrl'
+            })
+            .when('/user/edit', {
+                templateUrl: '/app/views/user/edit.html',
+                controller: 'UserEditCtrl'
+            })
             .otherwise({
                 redirectTo: '/'
             });
 
         $locationProvider.html5Mode(true);
 
-        $mdThemingProvider.theme('default')
-            .primaryPalette('blue-grey')
-            .accentPalette('red');
-
-        /* themes :
-        red, pink, purple, deep-purple, indigo, blue, light-blue, cyan, teal, green,
-        light-green, lime, yellow, amber, orange, deep-orange, brown, grey, blue-grey */
     });
 
 
-angular.module('datafestApp')
-    .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, MainMap) {
-        
-        $scope.toggleLeft = function() {
-            $mdSidenav('left').toggle()
-                .then(function() {
-                    $log.debug("toggle left is done");
-                });
-        };
+angular.module('xentinels')
+    .controller('AppCtrl', function($scope) {
 
-        $scope.MainMap = MainMap;
     });
