@@ -3,7 +3,7 @@ angular.module('xentinels').controller('logoutController', ['$scope', '$location
 
         $scope.logout = function() {
 
-            console.log(AuthService.isLoggedIn());
+            console.log(AuthService.logged());
 
             // call logout from service
             AuthService.logout()

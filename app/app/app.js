@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('xentinels', ['ngRoute', 'ngResource'])
+angular.module('xentinels', ['ngRoute', 'ngResource', 'ngCookies'])
     .config(function($routeProvider, $locationProvider) {
 
         $routeProvider
@@ -11,16 +11,23 @@ angular.module('xentinels', ['ngRoute', 'ngResource'])
                     restricted: false
                 }
             })
-            .when('/user/edit', {
-                templateUrl: '/app/views/user/edit.html',
-                controller: 'UserEditCtrl',
+            .when('/account/info', {
+                templateUrl: '/app/views/account/info.html',
+                controller: 'accountInfo',
                 access: {
                     restricted: true
                 }
             })
-            .when('/login', {
-                templateUrl: 'app/views/login.html',
-                controller: 'loginController',
+            .when('/account/auth', {
+                templateUrl: 'app/views/account/signup.html',
+                controller: 'signup',
+                access: {
+                    restricted: false
+                }
+            })
+            .when('/account/signin', {
+                templateUrl: 'app/views/account/signin.html',
+                controller: 'signin',
                 access: {
                     restricted: false
                 }
@@ -49,7 +56,7 @@ angular.module('xentinels', ['ngRoute', 'ngResource'])
 angular.module('xentinels')
     .run(function($rootScope, $location, $route, AuthService) {
         $rootScope.$on('$routeChangeStart', function(event, next, current) {
-            if (next.access.restricted && AuthService.isLoggedIn() === false) {
+            if (next.access.restricted && AuthService.logged() === false) {
                 $location.path('/login');
                 //$route.reload();
             }
@@ -57,10 +64,22 @@ angular.module('xentinels')
     });
 
 angular.module('xentinels')
-    .controller('AppCtrl', ['$scope', 'AuthService',
-        function($scope, AuthService) {
+    .controller('AppCtrl', ['$scope', 'AuthService', 'User',
+        function($scope, AuthService, User) {
+            
+            $scope.User = User;
+            $scope.Auth = AuthService;
 
-            AuthService.logged().then(function() {}, function() {});
+            if(AuthService.logged()){
+                User.me();
+            }
+            
+            console.log(AuthService.logged());
 
+            $scope.signOut = function(){
+
+                AuthService.signout();
+
+            }
         }
     ]);

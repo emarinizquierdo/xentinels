@@ -1,63 +1,32 @@
-angular.module('xentinels').factory('AuthService', ['$q', '$timeout', '$http',
-    function($q, $timeout, $http) {
+angular.module('xentinels').factory('AuthService', ['$q', '$timeout', '$http', '$cookies',
+    function($q, $timeout, $http, $cookies) {
+
+        var _Auth = {};
 
         // create user variable
         var user = null;
 
-        // return available functions for use in controllers
-        return ({
-            logged: logged,
-            isLoggedIn: isLoggedIn,
-            login: login,
-            logout: logout,
-            register: register
-        });
+        _Auth.isLogged = false;
 
-        function setSession(user) {
-            if(!user){
-              localStorage.removeItem("userSession");
-            }else{
-              localStorage.setItem("userSession", JSON.stringify(user));              
-            }
+        // return available functions for use in controllers
+        _Auth.logged = logged;
+        _Auth.login = login;
+        _Auth.logout = logout;
+        _Auth.register = register;
+        _Auth.signout = removeSession();
+
+        function removeSession() {
+            $cookies.remove("auth");
+            _Auth.isLogged = false;
         }
 
-        function isLoggedIn() {
-            if (localStorage.getItem("userSession")) {
+        function logged() {
+            if ($cookies.get("auth")) {
+                _Auth.isLogged = true;
                 return true;
             } else {
                 return false;
             }
-        }
-
-        function logged() {
-            // create a new instance of deferred
-            var deferred = $q.defer();
-
-            if (localStorage.getItem("userSession")) {
-                deferred.resolve(localStorage.getItem("userSession"));
-            } else {
-                // send a post request to the server
-                $http.get('/api/logged')
-                    // handle success
-                    .success(function(data, status) {
-                        if (status === 200 && data) {
-                            setSession(data);
-                            deferred.resolve();
-                        } else {
-                            setSession(null);
-                            deferred.reject();
-                        }
-                    })
-                    // handle error
-                    .error(function(data) {
-                        setSession(null);
-                        deferred.reject();
-                    });
-            }
-
-            // return promise object
-            return deferred.promise;
-
         }
 
         function login(email, password) {
@@ -66,15 +35,15 @@ angular.module('xentinels').factory('AuthService', ['$q', '$timeout', '$http',
             var deferred = $q.defer();
 
             // send a post request to the server
-            $http.post('/api/login', {
-                    email: email,
+            $http.post('/api/users/login', {
+                    user_name: email,
                     password: password
                 })
                 // handle success
                 .success(function(data, status) {
-                    if (status === 200 && data.result) {
+                    if (status === 200 && data) {
                         user = true;
-                        deferred.resolve();
+                        deferred.resolve(data);
                     } else {
                         user = false;
                         deferred.reject();
@@ -143,5 +112,6 @@ angular.module('xentinels').factory('AuthService', ['$q', '$timeout', '$http',
 
         }
 
+        return _Auth;
     }
 ]);

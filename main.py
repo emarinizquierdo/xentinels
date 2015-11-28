@@ -30,6 +30,7 @@ ROUTES = [webapp2.Route(r'/api/logged', server.login.Login, handler_method='get'
         '/api/users',
         user_model=server.user.User, # You can extend it with your own custom user class
         user_details_permission=PERMISSION_OWNER_USER,
+        email_as_username=True,
         verify_email_address=True,
         verification_email={
             'sender': 'Xentinels <xentineles@appspot.gserviceaccount.com>',
