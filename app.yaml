@@ -9,7 +9,10 @@ handlers:
   static_files: favicon.ico
   upload: favicon\.ico
 
-- url: /api/user.*
+- url: /api/users.*
+  script: main.APP
+
+- url: /api/device.*
   script: main.APP
 
 - url: /api/login/.*
@@ -38,3 +41,7 @@ handlers:
   static_files: app/index.html
   upload: app/index.html
   expiration: "15m"
+
+libraries:
+- name: webapp2
+  version: latest

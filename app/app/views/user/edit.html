@@ -1,9 +1,17 @@
 <div class="row">
     <form class="col s12">
       <div class="row">
+      <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate" ng-model="userData.email">
+          <label for="first_name">Email</label>
+        </div>
         <div class="input-field col s6">
-          <input id="first_name" type="text" class="validate" ng-model="userData.name">
+          <input id="first_name" type="text" class="validate" ng-model="userData.user_name">
           <label for="first_name">Name</label>
+        </div>
+        <div class="input-field col s6">
+          <input id="first_name" type="text" class="validate" ng-model="userData.password">
+          <label for="first_name">Password</label>
         </div>
         <div class="input-field col s6">
           <input id="last_name" type="text" class="validate" ng-model="userData.surnames">

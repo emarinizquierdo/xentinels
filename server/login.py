@@ -1,9 +1,10 @@
+import logging
 import json
 import webapp2
 from authomatic import Authomatic
 from authomatic.adapters import Webapp2Adapter
 from google.appengine.api import users
-import logging
+
 from config import CONFIG
 
 # Instantiate Authomatic.
@@ -35,13 +36,17 @@ class Login(webapp2.RequestHandler):
                 self.response.write(u'<h2>Damn that error: {}</h2>'.format(result.error.message))
             
             elif result.user:
+                # OAuth 2.0 and OAuth 1.0a provide only limited user data on login,
+                # We need to update the user to get more info.
+                if not (result.user.name and result.user.id):
+                    result.user.update()
+                logging.info(result.user.name)
             	self.redirect("/user/edit");
 
     # The handler must accept GET and POST http methods and
     # Accept any HTTP method and catch the "provider_name" URL variable.
     def get(self):
         
-        logging.info("entra en el get")
         user = users.get_current_user()
 
         if user:
@@ -54,4 +59,5 @@ class Login(webapp2.RequestHandler):
         # We're done
         #===============================================================
         else:
-            raise FailureError('Unable to authenticate identifier "{0}"!'.format(self.identifier))
+            self.response.set_status(404)
+            self.response.write('Oops! I could swear this page was here!')            

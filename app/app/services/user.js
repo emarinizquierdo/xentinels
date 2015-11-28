@@ -2,5 +2,5 @@
 
 angular.module('xentinels')
     .factory('User', function($resource) {
-        return $resource('/api/user');
+        return $resource('/api/users');
     });
