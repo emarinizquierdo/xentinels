@@ -2,13 +2,15 @@ import json
 import webapp2
 import time
 
+from google.appengine.api import users
+
 import server.user
 import server.device
 import logging
+import server.login
 
-logging.info('Main')
 
-def AsDict(aire):
+def AsDict(user):
   return { 'id': user.key.id(), 'name' : user.name, 'surnames' : user.surnames, 'birthDate' : user.birthDate }
 
 
@@ -34,20 +36,16 @@ class QueryUserHandler(RestHandler):
 class UpdateUserHandler(RestHandler):
 
   def post(self):
-    logging.info("entrando...................")
     r = json.loads(self.request.body)
-    user = server.user.UpdateUser()
+    user = server.user.UpdateUser(r['id'], r['name'], r.get('surnames', None), r.get('birthDate', None))
     r = AsDict(user)
     self.SendJson(r)
 
+# Create routes.
+ROUTES = [('/api/user', UpdateUserHandler),
+          ('/api/users', QueryUserHandler),
+          webapp2.Route(r'/api/logged', server.login.Login, handler_method='get'),
+          webapp2.Route(r'/api/login/<:.*>', server.login.Login, handler_method='any')]
 
-APP = webapp2.WSGIApplication([
-    ('/api/user', UpdateUserHandler),
-    ('/api/users', QueryUserHandler),
-    #('/seed', SeedHandler)
-    #('/rest/insert', InsertHandler),
-    #('/rest/delete', DeleteHandler),
-    #('/rest/update', UpdateHandler),
-], debug=True)
-
-
+# Instantiate the webapp2 WSGI application.
+APP = webapp2.WSGIApplication(ROUTES, debug=True)

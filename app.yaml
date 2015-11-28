@@ -12,11 +12,29 @@ handlers:
 - url: /api/user.*
   script: main.APP
 
-- url: (.*)(/)
-  static_files: app\1/index.html
+- url: /api/login/.*
+  script: main.APP
+
+- url: /api/logged.*
+  script: main.APP
+
+- url: /(.*\.html)
+  mime_type: text/html
+  static_files: app/\1
+  upload: app/(.*\.html)
+  expiration: "1h"
+
+- url: /(.*\.js)
+  mime_type: text/javascript
+  static_files: app/\1
+  upload: app/(.*\.js)
+
+- url: (.*)/(.*)
+  static_files: app/index.html
   upload: app
 
-- url: (.*)
-  static_files: app\1
-  upload: app
-
+# site root
+- url: /
+  static_files: app/index.html
+  upload: app/index.html
+  expiration: "15m"
