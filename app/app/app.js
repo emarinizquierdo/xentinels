@@ -32,15 +32,15 @@ angular.module('xentinels', ['ngRoute', 'ngResource', 'ngCookies'])
                     restricted: false
                 }
             })
-            .when('/logout', {
-                controller: 'logoutController',
+            .when('/account/devices', {
+                templateUrl: 'app/views/account/devices.html',
+                controller: 'devices',
                 access: {
                     restricted: false
                 }
             })
-            .when('/register', {
-                templateUrl: 'app/views/register.html',
-                controller: 'registerController',
+            .when('/logout', {
+                controller: 'logoutController',
                 access: {
                     restricted: false
                 }
@@ -66,20 +66,13 @@ angular.module('xentinels')
 angular.module('xentinels')
     .controller('AppCtrl', ['$scope', 'AuthService', 'User',
         function($scope, AuthService, User) {
-            
+
             $scope.User = User;
             $scope.Auth = AuthService;
 
-            if(AuthService.logged()){
+            if (AuthService.isLogged || AuthService.logged()) {
                 User.me();
             }
-            
-            console.log(AuthService.logged());
 
-            $scope.signOut = function(){
-
-                AuthService.signout();
-
-            }
         }
     ]);

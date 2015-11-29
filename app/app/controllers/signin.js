@@ -1,5 +1,5 @@
-angular.module('xentinels').controller('signin', ['$scope', '$location', 'AuthService',
-    function($scope, $location, AuthService) {
+angular.module('xentinels').controller('signin', ['$scope', '$location', 'AuthService', 'User',
+    function($scope, $location, AuthService, User) {
 
         console.log(AuthService.logged());
 
@@ -20,6 +20,7 @@ angular.module('xentinels').controller('signin', ['$scope', '$location', 'AuthSe
             AuthService.login($scope.loginForm.email, $scope.loginForm.password)
                 // handle success
                 .then(function() {
+                    User.me();
                     $location.path('/');
                     $scope.disabled = false;
                     $scope.loginForm = {};

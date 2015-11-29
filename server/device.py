@@ -3,7 +3,7 @@ from rest_gae.users import User
 from google.appengine.ext import ndb
 
 class Device(ndb.Model):
-    id = ndb.StringProperty()
+    deviceId = ndb.StringProperty()
     name = ndb.StringProperty(indexed=False)
     status = ndb.BooleanProperty(indexed=False)
     owner = ndb.KeyProperty(kind='User')

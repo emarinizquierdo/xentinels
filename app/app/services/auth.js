@@ -1,5 +1,5 @@
-angular.module('xentinels').factory('AuthService', ['$q', '$timeout', '$http', '$cookies',
-    function($q, $timeout, $http, $cookies) {
+angular.module('xentinels').factory('AuthService', ['$q', '$location', '$timeout', '$http', '$cookies',
+    function($q, $location, $timeout, $http, $cookies) {
 
         var _Auth = {};
 
@@ -13,11 +13,12 @@ angular.module('xentinels').factory('AuthService', ['$q', '$timeout', '$http', '
         _Auth.login = login;
         _Auth.logout = logout;
         _Auth.register = register;
-        _Auth.signout = removeSession();
+        _Auth.signout = removeSession;
 
         function removeSession() {
             $cookies.remove("auth");
             _Auth.isLogged = false;
+            $location.path("/");
         }
 
         function logged() {
@@ -42,16 +43,16 @@ angular.module('xentinels').factory('AuthService', ['$q', '$timeout', '$http', '
                 // handle success
                 .success(function(data, status) {
                     if (status === 200 && data) {
-                        user = true;
+                        _Auth.isLogged = true;
                         deferred.resolve(data);
                     } else {
-                        user = false;
+                        _Auth.isLogged = false;
                         deferred.reject();
                     }
                 })
                 // handle error
                 .error(function(data) {
-                    user = false;
+                    _Auth.isLogged = false;
                     deferred.reject();
                 });
 

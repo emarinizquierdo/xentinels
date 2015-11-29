@@ -1,25 +1,31 @@
-<div class="row">
-    <form class="col s12">
-        <div class="row">
-            <div class="input-field col s6">
-                <input id="first_name" type="text" class="validate" ng-model="User.data.email">
-                <label for="first_name" class="active">Email</label>
+<div class="container">
+    <div class="row">
+        <form class="col s12">
+            <div class="row">
+            <p class="caption">
+            probando
+            </p>
+            <div class="row">
+                <div class="input-field col s6">
+                    <input id="first_name" type="text" class="validate" ng-model="User.data.email">
+                    <label for="first_name" class="active">Email</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="first_name" type="text" class="validate" ng-model="User.data.name">
+                    <label for="first_name" class="active">Name</label>
+                </div>
+                <div class="input-field col s6">
+                    <input id="last_name" type="text" class="validate" ng-model="User.data.surnames">
+                    <label for="last_name" class="active">Surname</label>
+                </div>
             </div>
-            <div class="input-field col s6">
-                <input id="first_name" type="text" class="validate" ng-model="User.data.name">
-                <label for="first_name" class="active">Name</label>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input type="date" class="datepicker" ng-model="User.data.birthDate">
+                    <label for="disabled" class="active">Birth Date</label>
+                </div>
             </div>
-            <div class="input-field col s6">
-                <input id="last_name" type="text" class="validate" ng-model="User.data.surnames">
-                <label for="last_name" class="active">Surname</label>
-            </div>
-        </div>
-        <div class="row">
-            <div class="input-field col s12">
-                <input type="date" class="datepicker" ng-model="User.data.birthDate">
-                <label for="disabled" class="active">Birth Date</label>
-            </div>
-        </div>
-        <a class="waves-effect waves-light btn" ng-click="updateUser(User.data)">Save</a>
-    </form>
+            <a class="waves-effect waves-light btn" ng-click="updateUser(User.data)">Save</a>
+        </form>
+    </div>
 </div>

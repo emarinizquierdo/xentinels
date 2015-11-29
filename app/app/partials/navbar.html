@@ -1,0 +1,16 @@
+<nav>
+    <div class="nav-wrapper">
+        <div class="container">
+            <a href="#" data-activates="slide-out" class="button-collapse"><i class="mdi-navigation-menu"></i></a>
+        </div>
+        <a href="/" class="brand-logo">Xentinels</a>
+        <ul id="nav-mobile" class="right hide-on-med-and-down">
+            <li ng-show="!Auth.isLogged"><a href='account/signin' class="pointer">Sign In</a></li>
+            <li ng-show="Auth.isLogged"><a class="dropdown-button pointer" data-activates="dropdown1" data-beloworigin="true">{{User.data.email}}<i class="material-icons right">arrow_drop_down</i></a></li>
+            <ul id='dropdown1' class='dropdown-content'>
+                <li><a href="account/info">Account</a></li>
+                <li><a ng-click="signOut()">Sign Out</a></li>
+            </ul>
+        </ul>
+    </div>
+</nav>
