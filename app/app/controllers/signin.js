@@ -21,7 +21,7 @@ angular.module('xentinels').controller('signin', ['$scope', '$location', 'AuthSe
                 // handle success
                 .then(function() {
                     User.me();
-                    $location.path('/');
+                    $location.path('/account/devices');
                     $scope.disabled = false;
                     $scope.loginForm = {};
                 })

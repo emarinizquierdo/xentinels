@@ -5,6 +5,7 @@
         </div>
         <a href="/" class="brand-logo">Xentinels</a>
         <ul id="nav-mobile" class="right">
+            <li ng-show="!Auth.isLogged"><a href='account/auth' class="pointer">Sign Up</a></li>
             <li ng-show="!Auth.isLogged"><a href='account/signin' class="pointer">Sign In</a></li>
             <li ng-show="Auth.isLogged"><a class="dropdown-button pointer" data-activates="dropdown1" data-beloworigin="true">{{User.data.email}}<i class="material-icons right">arrow_drop_down</i></a></li>
             <ul id='dropdown1' class='dropdown-content'>

@@ -12,6 +12,14 @@ angular.module('xentinels').factory('Device', function($rootScope, $resource) {
         save: {
             method: 'POST',
             isArray: true
+        },
+        delete: {
+            method: 'DELETE',
+            isArray: true
+        },
+        update: {
+            method: 'PUT',
+            isArray: true
         }
     });
 

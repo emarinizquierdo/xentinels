@@ -12,23 +12,23 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
     <!-- injector:css -->
+    <link rel="stylesheet" href="css/deviceDetail.css">
     <link rel="stylesheet" href="css/navbar.css">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="app/app.css">
     <!-- endinjector -->
 </head>
 
-<body>
+<body ng-controller="AppCtrl">
 
-    <div ng-controller="AppCtrl">
-        <main>
-            <div navbar></div>
-            <div ng-view></div>
-            <div sidenav ng-show="Auth.isLogged"></div>
-        </main>
-        <div footer></div>
-    </div>
+    <main>
+        <div navbar></div>
+        <div ng-view></div>
+        <div sidenav ng-show="Auth.isLogged"></div>
+    </main>
+    <div footer></div>
 
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzVxEAf2JX8iWDk6zO5GpLmS0oSYThFQc"></script>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -41,6 +41,7 @@
     <!-- injector:js -->
     <script src="app/app.js"></script>
     <script src="app/controllers/accountInfo.js"></script>
+    <script src="app/controllers/deviceDetail.js"></script>
     <script src="app/controllers/devices.js"></script>
     <script src="app/controllers/logout.js"></script>
     <script src="app/controllers/main.js"></script>

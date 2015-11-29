@@ -17,10 +17,10 @@ ROUTES = [webapp2.Route(r'/api/logged', server.login.Login, handler_method='get'
             '/api/device', # The base URL for this model's endpoints
             server.device.Device, # The model to wrap
             permissions={
-              'GET': PERMISSION_ANYONE,
-              'POST': PERMISSION_LOGGED_IN_USER,
-              'PUT': PERMISSION_LOGGED_IN_USER,
-              'DELETE': PERMISSION_ANYONE
+              'GET': PERMISSION_OWNER_USER,
+              'POST': PERMISSION_OWNER_USER,
+              'PUT': PERMISSION_OWNER_USER,
+              'DELETE': PERMISSION_OWNER_USER
             },
             # Will be called for every PUT, right before the model is saved (also supports callbacks for GET/POST/DELETE)
             put_callback=lambda model, data: model

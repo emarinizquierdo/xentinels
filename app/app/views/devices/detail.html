@@ -1,0 +1,50 @@
+<div class="container">
+    <div class="card-panel">
+        <div class="card-content">
+            <div ng-show="!editing">
+                <a class="btn-floating right btn-large waves-effect waves-light" ng-click="edit(true)"><i class="material-icons">mode_edit</i></a>
+                <h4>{{deviceData.name}}</h4>
+                <h5 class="margintop">ID</h5>
+                <p>{{deviceData.deviceId}}</p>
+                <h5>Description</h5>
+                <p>{{deviceData.description}}</p>
+                <h5>Status</h5>
+                <p>{{deviceData.status}}</p>
+            </div>
+            <div ng-show="editing">
+                <div class="row">
+                    <h4>{{deviceData.name}}</h4>
+                    <div class="input-field col s6">
+                        <input id="first_name" type="text" class="validate" ng-model="deviceData.deviceId">
+                        <label for="first_name" class="active">Id</label>
+                    </div>
+                    <div class="input-field col s6">
+                        <input id="first_name" type="text" class="validate" ng-model="deviceData.name">
+                        <label for="first_name" class="active">Name</label>
+                    </div>
+                    <div class="input-field col s12">
+                        <textarea id="textarea1" class="materialize-textarea" ng-model="deviceData.description"></textarea>
+                        <label for="last_name" class="active">Description</label>
+                    </div>
+                </div>
+            </div>
+            <div class="input-field col s12">
+                    <h5>Location</h5>
+                    <a ng-show="editing" class="waves-effect waves-light btn" ng-click="centerMe()"><i class="material-icons left">my_location</i>Center me</a>
+                    <br/>
+            </div>
+            <div id="map" class="device-detail-map"></div>
+
+            <div ng-show="editing">
+                <div class="row">
+                    <div class="col s12">
+                        <div class="right">
+                            <a class="waves-effect waves-light btn" ng-click="edit(false)">Cancel</a>
+                            <a class="waves-effect waves-light btn" ng-click="updateDevice(deviceData)">Save</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

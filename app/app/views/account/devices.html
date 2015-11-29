@@ -2,16 +2,16 @@
     <div class="row">
         <h4>My devices</h4>
         <ul class="collection">
-            <li class="collection-item avatar" ng-repeat="device in Device.data">
+            <li class="collection-item avatar pointer" ng-repeat="device in Device.data" ng-click="goToDetail(device.id)">
                 <img src="https://community.imgtec.com/wp-content/uploads/sites/2/2015/05/onion-omega-150x150.png" alt="" class="circle">
                 <span class="title">{{device.deviceId}}</span>
                 <p>
                     {{device.name}}
                 </p>
-                <a class="secondary-content pointer" ng-click="deleteDevice(device)"><i class="material-icons">delete</i></a>
+                <a class="secondary-content pointer" ng-click="beforeToDelete(device); $event.stopPropagation();"><i class="material-icons">delete</i></a>
             </li>
         </ul>
-        <ul class="collapsible" data-collapsible="accordion">
+        <ul class="collapsible hoverable" data-collapsible="accordion">
             <li>
                 <div class="collapsible-header"><i class="material-icons">input</i>Add a new device</div>
                 <div class="collapsible-body">
@@ -20,14 +20,14 @@
                             <form class="col s12">
                                 <div class="row">
                                     <div class="input-field col s6">
-                                        <input placeholder="Placeholder" id="first_name" type="text" class="validate" ng-model="newDevice.deviceId">
-                                        <label for="first_name" class="active" >ID</label>
+                                        <input id="first_name" type="text" class="validate" ng-model="newDevice.deviceId">
+                                        <label for="first_name">ID</label>
                                     </div>
                                     <div class="input-field col s6">
                                         <input id="last_name" type="text" class="validate" ng-model="newDevice.name">
-                                        <label for="last_name" class="active" >Name</label>
+                                        <label for="last_name">Name</label>
                                     </div>
-                                    <a class="waves-effect waves-light btn" ng-click="addNew(newDevice)">Add</a>
+                                    <a class="right waves-effect waves-light btn" ng-click="addNew(newDevice)">Add</a>
                                 </div>
                             </form>
                         </div>
@@ -37,14 +37,13 @@
         </ul>
     </div>
 </div>
-
 <!-- Modal Structure -->
-  <div id="modal1" class="modal">
+<div id="modal1" class="modal">
     <div class="modal-content">
-      <h5>Are you going to delete a device. Are you sure?</h5>
+        <h5>Are you going to delete a device. Are you sure?</h5>
     </div>
     <div class="modal-footer">
-      <a class="modal-action modal-close waves-effect waves-green btn pointer">Delete</a>
-      <a class="modal-action modal-close waves-effect waves-green btn pointer">Cancel</a>
+        <a class="waves-effect waves-green btn-flat pointer" ng-click="deleteDevice()">Delete</a>
+        <a class="modal-action modal-close waves-effect waves-green btn-flat pointer">Cancel</a>
     </div>
-  </div>
+</div>

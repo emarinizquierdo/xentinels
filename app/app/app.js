@@ -39,6 +39,13 @@ angular.module('xentinels', ['ngRoute', 'ngResource', 'ngCookies'])
                     restricted: false
                 }
             })
+            .when('/devices/detail/:id', {
+                templateUrl: 'app/views/devices/detail.html',
+                controller: 'deviceDetail',
+                access: {
+                    restricted: false
+                }
+            })
             .when('/logout', {
                 controller: 'logoutController',
                 access: {
