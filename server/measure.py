@@ -3,13 +3,15 @@ from rest_gae.users import User
 from google.appengine.ext import ndb
 
 
-class Device(ndb.Model):
-    deviceId = ndb.StringProperty()
-    name = ndb.StringProperty(indexed=False)
-    description = ndb.StringProperty(indexed=False)
-    status = ndb.BooleanProperty(indexed=False)
+class Measure(ndb.Model):
+    measureId = ndb.StringProperty()
+    date = ndb.DateTimeProperty(indexed=False)
     lat = ndb.FloatProperty(indexed=False)
     lng = ndb.FloatProperty(indexed=False)
+    pollutant1 = ndb.FloatProperty(indexed=False)
+    pollutant2 = ndb.FloatProperty(indexed=False)
+    pollutant3 = ndb.FloatProperty(indexed=False)
+    pollutant4 = ndb.FloatProperty(indexed=False)
     owner = ndb.KeyProperty(kind='User')
 
     class RESTMeta:
