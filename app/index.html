@@ -29,7 +29,68 @@
     </main>
     <div footer></div>
 
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDzVxEAf2JX8iWDk6zO5GpLmS0oSYThFQc"></script>
+    <script type="text/javascript" src="//cdn.jsdelivr.net/sparkjs/0.5.9/spark.min.js"></script>
+
+    <div id="spark-login" ></div>
+    <script>
+    sparkLogin(function(data) {
+        spark.getDevice('2b0042000347343337373737', function(err, device) {
+            console.log('Device name: ' + device.name);
+            setInterval(function(){
+
+            device.getVariable('analogvalue', function(err, data) {
+                if (err) {
+                    console.log('An error occurred while getting attrs:', err);
+                } else {
+                    console.log('Device attr retrieved successfully:', data.result);
+
+                    var Vrl = data.result * (5 / 1024);
+                    var Rs = 20000 * (5 - Vrl) / Vrl;
+                    var Ro = 41763;
+                    var ratio = Rs/Ro;
+                    var ppm = 37143 * Math.pow(ratio, -3.178);
+                    console.log("ppm : " + ppm);
+                }
+            });
+            }, 5000);
+
+        });
+  });
+
+
+//define sensor resistance at 100ppm of NH3 in the clean air
+//calibrate your sensor to obtain precise value
+//Ro = Rs * sqrt(MQ135_SCALINGFACTOR/ppm, MQ135_EXPONENT)
+//   = Rs * exp( ln(MQ135_SCALINGFACTOR/ppm) / MQ135_EXPONENT )
+//#define MQ135_DEFAULTPPM 100 //default ppm of NH3 for calibration
+//#define MQ135_DEFAULTRO 108251 //default Ro for MQ135_DEFAULTPPM ppm of NH3
+
+//the graphic at fig.2 of datasheet (sensitivity characteristics of the MQ-135)
+//seems a power function y = a*x^b
+//so ppm = a*(Rs/Ro)^b
+//using power regression, you can obtain scaling factor (a), and exponent (b) !for a specific GAS!
+//points: (1.5 , 10) (0.75 , 100) (0.59 , 200)
+//#define MQ135_SCALINGFACTOR 37.58805473 //for NH3
+//#define MQ135_EXPONENT -3.235365807 //for NH3
+
+//define the Rs/Ro valid interval, MQ135 detect from 10ppm to 300ppm
+//look at the datasheet and use the helper to define those values
+//#define MQ135_MAXRSRO 1.505 //for NH3
+//#define MQ135_MINRSRO 0.56 //for NH3
+
+//#define MQ135_DEFAULTPPM 392 //default ppm of CO2 for calibration
+//#define MQ135_DEFAULTRO 41763 //default Ro for MQ135_DEFAULTPPM ppm of CO2
+//#define MQ135_SCALINGFACTOR 116.6020682 //CO2 gas value
+//#define MQ135_EXPONENT -2.769034857 //CO2 gas value
+//#define MQ135_MAXRSRO 2.428 //for CO2
+//#define MQ135_MINRSRO 0.358 //for CO2
+
+ 
+
+
+</script>
+</script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAn07W6253Ku7_IyM4faVH1wzZe0hVafPk"></script>
     <!--Import jQuery before materialize.js-->
     <script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>

@@ -6,14 +6,14 @@ from authomatic.adapters import Webapp2Adapter
 from google.appengine.api import users
 from webapp2_extras import sessions
 from config import CONFIG
+from authomatic.extras import gae
+import user
 
 # Instantiate Authomatic.
 authomatic = Authomatic(config=CONFIG, secret='some random secret string')
 
 
 def AsUser(user):
-    logging.info("the user logged is")
-    logging.info(logginguser)
     return {'id': user.user_id(), 'email': user.email()}
 
 
@@ -28,21 +28,25 @@ class Login(webapp2.RequestHandler):
     # The handler must accept GET and POST http methods and
     # Accept any HTTP method and catch the "provider_name" URL variable.
     def any(self, provider_name):
+        # Creates a new Webapp2 session.
+        session = gae.Webapp2Session(self, secret='my-super-secret-key')
 
-        user = users.get_current_user()
+        userr = users.get_current_user()
 
         logging.info('......................is ther user?')
 
-        if user:
+        if userr:
             logging.info('Authentication successful.')
             logging.info('Creating user.')
-            r = AsUser(user)
+            r = AsUser(userr)
             SendJson(self, r)
+            user.User(email = userr.email())
+            user.put()
             self.redirect("/user/edit")
 
         else:
             # It all begins with login.
-            result = authomatic.login(Webapp2Adapter(self), provider_name)
+            result = authomatic.login(Webapp2Adapter(self), provider_name, session=session, session_saver=session.save)
 
             # Do not write anything to the response if there is no result!
             if result:
@@ -59,6 +63,8 @@ class Login(webapp2.RequestHandler):
                         result.user.update()
                     logging.info("ha entrado en result.user")
                     logging.info(result.user.name)
+                    myuser = user.User(email = result.user.email)
+                    myuser.put()
                     self.redirect("/user/edit")
 
     # The handler must accept GET and POST http methods and
@@ -66,6 +72,8 @@ class Login(webapp2.RequestHandler):
     def get(self):
 
         user = users.get_current_user()
+
+        logging.info('......................is ther user?')
 
         if user:
             logging.info('Authentication successful.')

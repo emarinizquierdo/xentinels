@@ -16,13 +16,13 @@ angular.module('xentinels').factory('AuthService', ['$q', '$location', '$timeout
         _Auth.signout = removeSession;
 
         function removeSession() {
-            $cookies.remove("auth");
+            $cookies.remove("webapp2authomatic");
             _Auth.isLogged = false;
             $location.path("/");
         }
 
         function logged() {
-            if ($cookies.get("auth")) {
+            if ($cookies.get("webapp2authomatic")) {
                 _Auth.isLogged = true;
                 return true;
             } else {
